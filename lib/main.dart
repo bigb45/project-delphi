@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:project_delphi/styles.dart';
 import 'package:project_delphi/widgets/button.dart';
 import 'package:project_delphi/widgets/textfield.dart';
 import 'util.dart';
@@ -62,6 +61,9 @@ class Catalog extends StatelessWidget {
                 height: 10,
               ),
               Textfield(),
+              SizedBox(
+                height: 10,
+              ),
             ],
           ),
         ),
