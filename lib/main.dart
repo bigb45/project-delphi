@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:project_delphi/styles.dart';
 import 'package:project_delphi/widgets/button.dart';
 import 'package:project_delphi/widgets/textfield.dart';
 import 'util.dart';
@@ -22,9 +23,12 @@ class MyApp extends StatelessWidget {
 
     MaterialTheme theme = MaterialTheme(textTheme);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
-      home: const Catalog(),
+      home: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: const Catalog()),
     );
   }
 }
@@ -44,6 +48,7 @@ class Catalog extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              Typography(),
               SizedBox(
                 height: 10,
               ),
@@ -61,6 +66,54 @@ class Catalog extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class Typography extends StatelessWidget {
+  const Typography({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          "Heading",
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        Text(
+          "Heading",
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        Text(
+          "Heading",
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+        Text(
+          "label",
+          style: Theme.of(context).textTheme.labelLarge,
+        ),
+        Text(
+          "label",
+          style: Theme.of(context).textTheme.labelMedium,
+        ),
+        Text(
+          "label",
+          style: Theme.of(context).textTheme.labelSmall,
+        ),
+        Text(
+          "body",
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        Text(
+          "body",
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        Text(
+          "body",
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+      ],
     );
   }
 }
