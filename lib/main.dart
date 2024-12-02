@@ -55,6 +55,7 @@ class Catalog extends StatelessWidget {
                 text: 'Next',
                 onPressed: () {},
                 leadingIcon: Icons.arrow_back,
+                isLoading: false,
                 trailingIcon: Icons.arrow_forward,
               ),
               SizedBox(
