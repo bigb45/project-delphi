@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:project_delphi/widgets/button.dart';
+import 'package:project_delphi/widgets/floating_topbar.dart';
 import 'package:project_delphi/widgets/textfield.dart';
 import 'util.dart';
 import 'theme.dart';
@@ -37,16 +38,20 @@ class Catalog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Screen'),
-      ),
+    return SafeArea(
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: FloatingTopbar(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
+            child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+                  SizedBox(
+                    height: 100,
+                  ),
               Typography(),
               SizedBox(
                 height: 10,
@@ -66,6 +71,8 @@ class Catalog extends StatelessWidget {
                 height: 10,
               ),
             ],
+              ),
+            ),
           ),
         ),
       ),
