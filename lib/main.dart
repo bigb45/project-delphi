@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:project_delphi/features/home/home.dart';
 import 'package:project_delphi/widgets/button.dart';
 import 'package:project_delphi/widgets/floating_topbar.dart';
 import 'package:project_delphi/widgets/textfield.dart';
@@ -42,35 +43,51 @@ class Catalog extends StatelessWidget {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: FloatingTopbar(),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
                   SizedBox(
                     height: 100,
                   ),
-              Typography(),
-              SizedBox(
-                height: 10,
-              ),
-              Button(
-                text: 'Next',
-                onPressed: () {},
-                leadingIcon: Icons.arrow_back,
-                isLoading: false,
-                trailingIcon: Icons.arrow_forward,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Textfield(),
-              SizedBox(
-                height: 10,
-              ),
-            ],
+                  Typography(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Button(
+                    text: 'Next',
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Home()));
+                    },
+                    leadingIcon: Icons.arrow_back,
+                    isLoading: false,
+                    trailingIcon: Icons.arrow_forward,
+                  ),
+                  SizedBox(
+                    height: 600,
+                  ),
+                  Form(
+                    autovalidateMode: AutovalidateMode.always,
+                    child: Textfield(
+                      label: "Label",
+                      keyboardType: TextInputType.text,
+                      validator: (text) {
+                        return text?.isEmpty ?? true
+                            ? "Please enter a value"
+                            : null;
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
               ),
             ),
           ),

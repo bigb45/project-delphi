@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 
 class Textfield extends StatefulWidget {
-  const Textfield({super.key});
+  final Function(String text)? onTextChanged;
+  final String? Function(String? text)? validator;
+  final Key? formKey;
+  final String label;
+  final TextInputType keyboardType;
+  const Textfield({
+    super.key,
+    this.onTextChanged,
+    this.formKey,
+    required this.label,
+    this.keyboardType = TextInputType.text,
+    this.validator,
+  });
 
   @override
   State<Textfield> createState() => _Textfield();
@@ -32,53 +44,61 @@ class _Textfield extends State<Textfield> {
 
   @override
   Widget build(BuildContext context) {
-    return Focus(
-      onFocusChange: (value) {
-        setState(() {});
-      },
-      child: GestureDetector(
-        onTap: () {
-          _focusNode.requestFocus();
+    return Card(
+      child: Focus(
+        onFocusChange: (value) {
+          setState(() {});
         },
-        child: Container(
-          height: 56,
-          decoration: BoxDecoration(
-            color: Theme.of(context).canvasColor,
-            border: Border.all(
-              color: _focusNode.hasFocus || hasText
-                  ? Theme.of(context).colorScheme.secondary
-                  : Theme.of(context).colorScheme.onSecondaryContainer,
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                height: 22,
-                child: TextField(
-                  cursorWidth: 1,
-                  cursorHeight: 16,
-                  controller: _controller,
-                  focusNode: _focusNode,
-                  cursorColor: Theme.of(context).colorScheme.inversePrimary,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(borderSide: BorderSide.none),
-                    label: Text(
-                      "Label",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 16),
-                    ),
-                  ),
-                  keyboardType: TextInputType.text,
-                ),
+        child: GestureDetector(
+          onTap: () {
+            _focusNode.requestFocus();
+          },
+          child: Container(
+            height: 56,
+            decoration: BoxDecoration(
+              color: Theme.of(context).canvasColor,
+              border: Border.all(
+                color: _focusNode.hasFocus || hasText
+                    ? Theme.of(context).colorScheme.secondary
+                    : Theme.of(context).colorScheme.onSecondaryContainer,
+                width: 1,
               ),
-            ],
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 22,
+                  child: TextFormField(
+                    cursorWidth: 1,
+                    cursorHeight: 16,
+                    controller: _controller,
+                    focusNode: _focusNode,
+                    cursorColor: Theme.of(context).colorScheme.inversePrimary,
+                    validator: (value) {
+                      if (widget.validator != null) {
+                        return widget.validator!(value);
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(borderSide: BorderSide.none),
+                      label: Text(
+                        "Label",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 16),
+                      ),
+                    ),
+                    keyboardType: widget.keyboardType,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
