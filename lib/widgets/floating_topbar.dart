@@ -22,7 +22,10 @@ class _FloatingTopbarState extends State<FloatingTopbar> {
           boxShadow: [
             BoxShadow(
                 offset: const Offset(0, 5),
-                color: Colors.black.withOpacity(0.1),
+                color: Theme.of(context)
+                    .colorScheme
+                    .inverseSurface
+                    .withOpacity(0.1),
                 blurRadius: 16,
                 spreadRadius: 8)
           ],
@@ -46,9 +49,14 @@ class _FloatingTopbarState extends State<FloatingTopbar> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              child: Text("Choose a starting Point",
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface)),
+              child: Text(
+                "Choose a starting Point",
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontWeight: FontWeight.w300,
+                      fontSize: 18,
+                    ),
+              ),
             ),
           ],
         ),
@@ -81,7 +89,10 @@ class NavigationTopbar extends StatelessWidget implements PreferredSizeWidget {
                 boxShadow: [
                   BoxShadow(
                       offset: const Offset(0, 5),
-                      color: Colors.black.withOpacity(0.1),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .inverseSurface
+                          .withOpacity(0.1),
                       blurRadius: 16,
                       spreadRadius: 0)
                 ],
@@ -100,7 +111,10 @@ class NavigationTopbar extends StatelessWidget implements PreferredSizeWidget {
                 boxShadow: [
                   BoxShadow(
                     offset: const Offset(0, 5),
-                    color: Colors.black.withOpacity(0.1),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .inverseSurface
+                        .withOpacity(0.1),
                     blurRadius: 16,
                     spreadRadius: 0,
                   )
