@@ -40,58 +40,61 @@ class Catalog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: FloatingTopbar(),
-        body: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 100,
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: FloatingTopbar(),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 100,
+              ),
+              Typography(),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Button(
+                  text: 'Next',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => GestureDetector(
+                          onTap: () =>
+                              FocusManager.instance.primaryFocus?.unfocus(),
+                          child: Home(),
+                        ),
+                      ),
+                    );
+                  },
+                  leadingIcon: Icons.arrow_back,
+                  isLoading: false,
+                  trailingIcon: Icons.arrow_forward,
                 ),
-                Typography(),
-                SizedBox(
-                  height: 10,
+              ),
+              SizedBox(
+                height: 600,
+              ),
+              Form(
+                autovalidateMode: AutovalidateMode.always,
+                child: Textfield(
+                  label: "Label",
+                  keyboardType: TextInputType.text,
+                  validator: (text) {
+                    return text?.isEmpty ?? true
+                        ? "Please enter a value"
+                        : null;
+                  },
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Button(
-                    text: 'Next',
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SeparationAnimation()),
-                      );
-                    },
-                    leadingIcon: Icons.arrow_back,
-                    isLoading: false,
-                    trailingIcon: Icons.arrow_forward,
-                  ),
-                ),
-                SizedBox(
-                  height: 600,
-                ),
-                Form(
-                  autovalidateMode: AutovalidateMode.always,
-                  child: Textfield(
-                    label: "Label",
-                    keyboardType: TextInputType.text,
-                    validator: (text) {
-                      return text?.isEmpty ?? true
-                          ? "Please enter a value"
-                          : null;
-                    },
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-              ],
-            ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
           ),
         ),
       ),
