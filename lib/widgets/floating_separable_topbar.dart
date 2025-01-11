@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:project_delphi/widgets/animated_shadow_container.dart';
 
@@ -6,12 +8,16 @@ class FloatingSeparableTopbar extends StatefulWidget
   final bool isSeparated;
   final Widget child;
   final Widget leadingIcon;
+  final VoidCallback? onTopbarClicked;
+  final VoidCallback? onSeparatedIconClicked;
 
   const FloatingSeparableTopbar({
     super.key,
     this.isSeparated = false,
     required this.child,
     required this.leadingIcon,
+    this.onTopbarClicked,
+    this.onSeparatedIconClicked,
   });
 
   @override
@@ -46,61 +52,76 @@ class _FloatingSeparableTopbarState extends State<FloatingSeparableTopbar> {
           );
     gap = isSeparated ? 16 : 0;
 
-    return SizedBox(
-      width: double.infinity,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AnimatedShadowContainer(
-              isShadowVisible: !isSeparated,
-              animateShadow: false,
-              color: Theme.of(context).colorScheme.surfaceContainerLow,
-              child: AnimatedContainer(
-                duration: duration,
-                height: 53,
-                width: 53,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surfaceContainerLow,
-                  borderRadius: rightCardBorderRadius,
-                ),
-                child: AnimatedSwitcher(
-                  duration: duration,
-                  child: widget.leadingIcon,
-                ),
-              ),
-            ),
-            AnimatedContainer(
-              duration: duration,
-              width: gap,
-            ),
-            Expanded(
-              // shadow animation
-              child: AnimatedShadowContainer(
-                isShadowVisible: isSeparated,
+    return GestureDetector(
+      onTap: () => {
+        widget.onTopbarClicked?.call(),
+      },
+      child: SizedBox(
+        width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedShadowContainer(
+                isShadowVisible: !isSeparated,
+                animateShadow: false,
                 color: Theme.of(context).colorScheme.surfaceContainerLow,
-                // width animation
-                child: AnimatedContainer(
-                  height: 53,
-                  duration: duration,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surfaceContainerLow,
-                    borderRadius: leftCardBorderRadius,
-                  ),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                    // fade animation
+                child: GestureDetector(
+                  onTap: () => {
+                    widget.onSeparatedIconClicked?.call(),
+                  },
+                  child: AnimatedContainer(
+                    duration: duration,
+                    height: 53,
+                    width: 53,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surfaceContainerLow,
+                      borderRadius: rightCardBorderRadius,
+                    ),
                     child: AnimatedSwitcher(
                       duration: duration,
-                      child: widget.child,
+                      child: widget.leadingIcon,
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+              AnimatedContainer(
+                duration: duration,
+                width: gap,
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => {
+                    widget.onTopbarClicked?.call(),
+                  },
+                  child: AnimatedShadowContainer(
+                    isShadowVisible: isSeparated,
+                    color: Theme.of(context).colorScheme.surfaceContainerLow,
+                    // width animation
+                    child: AnimatedContainer(
+                      height: 53,
+                      duration: duration,
+                      decoration: BoxDecoration(
+                        color:
+                            Theme.of(context).colorScheme.surfaceContainerLow,
+                        borderRadius: leftCardBorderRadius,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 8),
+                        // fade animation
+                        child: AnimatedSwitcher(
+                          duration: duration,
+                          child: widget.child,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

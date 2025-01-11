@@ -78,11 +78,28 @@ class _HomeState extends State<Home> {
     });
   }
 
-  void _calculateItemWidths() {
-    itemWidths = itemKeys
-        .map((key) => key.currentContext!.findRenderObject() as RenderBox)
-        .map((box) => box.size.width.toInt())
-        .toList();
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    child = SizedBox(
+      width: double.infinity,
+      child: Text(
+        key: const ValueKey("select widget"),
+        "Choose a starting Point",
+        textAlign: TextAlign.end,
+        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+              fontWeight: FontWeight.w300,
+              fontSize: 18,
+            ),
+      ),
+    );
+
+    leadingIcon = Icon(
+      key: const ValueKey("filter icon"),
+      Icons.filter_list_sharp,
+      color: Theme.of(context).colorScheme.inversePrimary,
+    );
   }
 
   void onSearchTap() {
