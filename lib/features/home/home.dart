@@ -25,8 +25,34 @@ class _HomeState extends State<Home> {
 
   final TextEditingController _controller = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
-  // final ScrollController _locationCardScrollController = ScrollController();
   late GoogleMapController _mapController;
+
+  final Set<Polyline> polylines = {};
+  final List<LatLng> _routePoints = const [
+    LatLng(31.9053544601599, 35.20592818490456),
+    LatLng(31.90601630175916, 35.20814644268508),
+    LatLng(31.90662394678749, 35.21051777978334),
+    LatLng(31.90667000554085, 35.21157203882197),
+    LatLng(31.90659667014141, 35.21318475442082),
+    LatLng(31.90713192778817, 35.21361267367403),
+    LatLng(31.9109094268626, 35.21586435865929),
+    LatLng(31.91151294353682, 35.21606243202883),
+    LatLng(31.91637351319492, 35.21583541761113),
+    LatLng(31.9180921416186, 35.21567682932381),
+    LatLng(31.91874618980642, 35.2159396901732),
+    LatLng(31.91951490307092, 35.21662069168706),
+    LatLng(31.92004389080214, 35.21715907543499),
+    LatLng(31.92082462523716, 35.21444133579557),
+    LatLng(31.92168216893316, 35.21396200891462),
+    LatLng(31.92476956985254, 35.2145125901326),
+    LatLng(31.92624789550297, 35.21296136797481),
+    LatLng(31.92637994951565, 35.21297032637945),
+    LatLng(31.92648510165664, 35.21311150053212),
+    LatLng(31.92642360331217, 35.21391099956971),
+    LatLng(31.9264556665428, 35.21415407574364),
+    LatLng(31.92674154245667, 35.21448477231523),
+    LatLng(31.92789372958306, 35.21558396179001),
+  ];
 
   int? selectedLocationCardIndex;
 
@@ -44,11 +70,25 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    _addRoute();
     _searchFocusNode.addListener(() {
       setState(() {
         isSeparated = !_searchFocusNode.hasFocus;
       });
       onSearchTap();
+    });
+  }
+
+  void _addRoute() {
+    final Polyline routePolyline = Polyline(
+      polylineId: PolylineId('route_1'),
+      points: _routePoints,
+      color: Colors.blue,
+      width: 5,
+    );
+
+    setState(() {
+      polylines.add(routePolyline);
     });
   }
 
@@ -162,7 +202,11 @@ class _HomeState extends State<Home> {
         body: Stack(
           children: [
             GoogleMap(
-              initialCameraPosition: initialCameraPosition,
+              initialCameraPosition: CameraPosition(
+                target: _routePoints[0], // Focus on the first point
+                zoom: 10,
+              ),
+              polylines: polylines,
               markers: _markersList,
               mapType: MapType.normal,
               onMapCreated: _onMapCreated,

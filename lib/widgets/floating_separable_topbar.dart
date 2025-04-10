@@ -52,6 +52,10 @@ class _FloatingSeparableTopbarState extends State<FloatingSeparableTopbar> {
           );
     gap = isSeparated ? 16 : 0;
 
+    double topbarHeight = 53;
+
+    void animateDropdown() {}
+
     return GestureDetector(
       onTap: () => {
         widget.onTopbarClicked?.call(),
@@ -68,12 +72,13 @@ class _FloatingSeparableTopbarState extends State<FloatingSeparableTopbar> {
                 animateShadow: false,
                 color: Theme.of(context).colorScheme.surfaceContainerLow,
                 child: GestureDetector(
-                  onTap: () => {
-                    widget.onSeparatedIconClicked?.call(),
+                  onTap: () {
+                    animateDropdown();
+                    widget.onSeparatedIconClicked?.call();
                   },
                   child: AnimatedContainer(
                     duration: duration,
-                    height: 53,
+                    height: topbarHeight,
                     width: 53,
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.surfaceContainerLow,
@@ -100,7 +105,7 @@ class _FloatingSeparableTopbarState extends State<FloatingSeparableTopbar> {
                     color: Theme.of(context).colorScheme.surfaceContainerLow,
                     // width animation
                     child: AnimatedContainer(
-                      height: 53,
+                      height: topbarHeight,
                       duration: duration,
                       decoration: BoxDecoration(
                         color:
@@ -127,3 +132,17 @@ class _FloatingSeparableTopbarState extends State<FloatingSeparableTopbar> {
     );
   }
 }
+
+const List<String> mockCities = [
+  "Ramallah",
+  "Jerusalem",
+  "Nablus",
+  "Hebron",
+  "Tulkarm",
+  "Jenin",
+  "Bethlehem",
+  "Jericho",
+  "Qalqilya",
+  "Tubas",
+  "Salfit",
+];
